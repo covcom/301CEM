@@ -46,17 +46,13 @@ class UITestsPortrait: XCTestCase {
         //title.buttons["Clear text"].tap()
         // type in the new title
         title.typeText("Lecture Notes")
-        // get a reference to the note field
-        let note = app.textViews["noteText"]
         // select the note field
-        note.tap()
-        // enter the note details.
-        note.typeText("My lecture notes.")
-        let noteNav = app.navigationBars["Lecture Notes"]
-        noteNav.buttons["Done"].tap()
+        app.textViews["noteText"].tap()
+        app.textViews["noteText"].typeText("My lecture notes.")
+        app.buttons["Done"].tap()
         // the keyboard is now hidden
         XCTAssert(app.keyboards.count == 0, "The keyboard is shown")
-        noteNav.buttons["Note It"].tap()
+        app.buttons["Note It"].tap()
         // there should still be two cells
         XCTAssertEqual(cells.count, 2, "found instead: \(cells.debugDescription)")
         XCTAssert(app.staticTexts["Lecture Notes"].exists)
@@ -72,6 +68,10 @@ class UITestsPortrait: XCTestCase {
         XCTAssert(app.keyboards.count > 0, "The keyboard is not shown")
         app.textFields["Title"].buttons["Clear text"].tap()
         app.textFields["Title"].typeText("Updated Notes")
+        app.textViews["noteText"].tap()
+        app.textViews["noteText"].press(forDuration: 2)
+        app.descendants(matching: .any).element(matching: .any, identifier: "Select All").tap()
+        app.keys["delete"].press(forDuration: 2)
         app.buttons["Done"].tap()
         XCTAssert(app.keyboards.count == 0, "The keyboard is shown")
         app.navigationBars["Updated Notes"].buttons["Note It"].tap()
