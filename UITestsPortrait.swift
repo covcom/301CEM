@@ -2,7 +2,7 @@
 import XCTest
 
 class UITestsPortrait: XCTestCase {
-
+    
     override func setUp() {
         super.setUp()
         // make sure the device is in portrait orientation
@@ -13,8 +13,8 @@ class UITestsPortrait: XCTestCase {
         let cells = app.tables.cells
         app.navigationBars["Note It"].buttons["Add"].tap()
         cells.element(boundBy: 0).tap()
-        app.textFields["Title"].tap()
-        app.textFields["Title"].typeText("Sample Note")
+        app.textFields["titleText"].tap()
+        app.textFields["titleText"].typeText("Sample Note")
         app.textViews["noteText"].tap()
         app.textViews["noteText"].typeText("sample note details.")
         app.navigationBars["Sample Note"].buttons["Note It"].tap()
@@ -37,7 +37,7 @@ class UITestsPortrait: XCTestCase {
         // make sure the keyboard is hidden
         XCTAssert(app.keyboards.count == 0, "The keyboard is shown")
         // select the title field
-        let title = app.textFields["Title"]
+        let title = app.textFields["titleText"]
         // select the field
         title.tap()
         // the keyboard is showing
@@ -64,10 +64,10 @@ class UITestsPortrait: XCTestCase {
         XCTAssertEqual(cells.count, 1, "found instead: \(cells.debugDescription)")
         cells.element(boundBy: 0).tap()
         XCTAssert(app.keyboards.count == 0, "The keyboard is shown")
-        app.textFields["Title"].tap()
+        app.textFields["titleText"].tap()
         XCTAssert(app.keyboards.count > 0, "The keyboard is not shown")
-        app.textFields["Title"].buttons["Clear text"].tap()
-        app.textFields["Title"].typeText("Updated Notes")
+        app.textFields["titleText"].buttons["Clear text"].tap()
+        app.textFields["titleText"].typeText("Updated Notes")
         app.textViews["noteText"].tap()
         app.textViews["noteText"].press(forDuration: 2)
         app.descendants(matching: .any).element(matching: .any, identifier: "Select All").tap()
@@ -110,8 +110,8 @@ class UITestsPortrait: XCTestCase {
         let cells = app.tables.cells
         app.navigationBars["Note It"].buttons["Add"].tap()
         cells.element(boundBy: 1).tap()
-        app.textFields["Title"].tap()
-        app.textFields["Title"].typeText("Second Note")
+        app.textFields["titleText"].tap()
+        app.textFields["titleText"].typeText("Second Note")
         app.textViews["noteText"].tap()
         app.textViews["noteText"].typeText("second note details.")
         app.navigationBars["Second Note"].buttons["Note It"].tap()
