@@ -2,12 +2,12 @@
 import XCTest
 @testable import Note_It
 
-class NotesTests: XCTestCase {
+class ExtendedNotesTests: XCTestCase {
     
     override func setUp() {
-        Notes.sharedInstance.add(note: Note(title: "Note One", text: "Details of note one"))
-        Notes.sharedInstance.add(note: Note(title: "Note Two", text: "Details of note two", favourite: true))
-        Notes.sharedInstance.add(note: Note(title: "Note Three", text: "Details of note three", favourite: false))
+        try? Notes.sharedInstance.add(note: Note(title: "Note One", text: "Details of note one"))
+        try? Notes.sharedInstance.add(note: Note(title: "Note Two", text: "Details of note two", favourite: true))
+        try? Notes.sharedInstance.add(note: Note(title: "Note Three", text: "Details of note three", favourite: false))
     }
     
     override func tearDown() {
@@ -18,18 +18,26 @@ class NotesTests: XCTestCase {
     func testAddNewNote() {
         let notes = Notes.sharedInstance
         XCTAssertEqual(notes.count, 3)
-        let note = Note(title: "Note Four", text: "Details of note four")
-        notes.add(note: note)
-        XCTAssertEqual(notes.count, 4)
+        do {
+            let note = Note(title: "Note Four", text: "Details of note four")
+            try notes.add(note: note)
+            XCTAssertEqual(notes.count, 4)
+        } catch {
+            XCTFail()
+        }
     }
     
     func testAddMultipleNotes() {
         let notes = Notes.sharedInstance
         XCTAssertEqual(notes.count, 3)
-        notes.add(note: Note(title: "Note Four", text: "Details of note four", favourite: false))
-        notes.add(note: Note(title: "Note Five", text: "Details of note five", favourite: true))
-        notes.add(note: Note(title: "Note Six", text: "Details of note six"))
-        XCTAssertEqual(notes.count, 6)
+        do {
+            try notes.add(note: Note(title: "Note Four", text: "Details of note four", favourite: false))
+            try notes.add(note: Note(title: "Note Five", text: "Details of note five", favourite: true))
+            try notes.add(note: Note(title: "Note Six", text: "Details of note six"))
+            XCTAssertEqual(notes.count, 6)
+        } catch {
+            XCTFail()
+        }
     }
     
     func testRetrieveFirstNote() {
